@@ -15,13 +15,6 @@ provider "azurerm" {
   features {}
 }
 
-#Resource Group de Ejemplo
-
-# resource "azurerm_resource_group" "state-demo-secure-rg" {
-#   name     = "state-demo"
-#   location = "eastus"
-# }
-
 #START> Function App Python 3.10 con Consumption plan <
 
 resource "azurerm_resource_group" "functionapp-py-consumption-rg" {
@@ -37,26 +30,7 @@ resource "azurerm_storage_account" "functionapp-py-consumption-sa" {
   account_replication_type = "LRS"
 }
 
-#azurerm_app_service_plan fue deprecado y sustituido por azurerm_service_plan 
 
-# resource "azurerm_app_service_plan" "functionapp-py-consumption-asp" {
-#   name                = local.azure_functions_asp_name
-#   location            = azurerm_resource_group.functionapp-py-consumption-rg.location
-#   resource_group_name = azurerm_resource_group.functionapp-py-consumption-rg.name
-#   kind                = "Linux"
-#   reserved            = true
-
-#   sku {
-#     tier = "Dynamic"
-#     size = "Y1"
-#   }
-
-#   lifecycle {
-#     ignore_changes = [
-#       kind
-#     ]
-#   }
-# }
 
 resource "azurerm_service_plan" "functionapp-py-consumption-asp" {
   name                = local.azure_functions_asp_name
@@ -114,6 +88,27 @@ resource "azurerm_linux_function_app" "functionapp-py-consumption-fa" {
 
 #   site_config {
 #     linux_fx_version = "python|3.10"
+#   }
+# }
+
+#azurerm_app_service_plan fue deprecado y sustituido por azurerm_service_plan 
+
+# resource "azurerm_app_service_plan" "functionapp-py-consumption-asp" {
+#   name                = local.azure_functions_asp_name
+#   location            = azurerm_resource_group.functionapp-py-consumption-rg.location
+#   resource_group_name = azurerm_resource_group.functionapp-py-consumption-rg.name
+#   kind                = "Linux"
+#   reserved            = true
+
+#   sku {
+#     tier = "Dynamic"
+#     size = "Y1"
+#   }
+
+#   lifecycle {
+#     ignore_changes = [
+#       kind
+#     ]
 #   }
 # }
 
