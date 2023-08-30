@@ -15,10 +15,6 @@ provider "azurerm" {
   features {}
 }
 
-provider "azurerm" {
-  features {}
-}
-
 #Resource Group de Ejemplo
 
 # resource "azurerm_resource_group" "state-demo-secure-rg" {
@@ -79,16 +75,19 @@ resource "azurerm_linux_function_app" "functionapp-py-consumption-fa" {
   storage_account_access_key = azurerm_storage_account.functionapp-py-consumption-sa.primary_access_key
   service_plan_id            = azurerm_service_plan.functionapp-py-consumption-asp.id
 
+# > Aquí podremos editar el Runtime <
+
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "python"
+    FUNCTIONS_WORKER_RUNTIME = "python" # Worker runtime 
   }
 
   site_config {
 
     application_stack {
-      python_version = "3.10"
+      python_version = "3.9" #Version de runtime 
     }  
-    cors {
+    # Habilitar al portal en Cors para Test del Code
+    cors { 
       allowed_origins = [
         "https://portal.azure.com",
       ]
